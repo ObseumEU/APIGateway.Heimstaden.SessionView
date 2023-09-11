@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Sentry;
 
 namespace APIGateway.Heimstaden.SessionView
 {
@@ -65,6 +66,10 @@ namespace APIGateway.Heimstaden.SessionView
             app.UseRouting();
 
             app.UseSentryTracing();
+            SentrySdk.ConfigureScope(scope =>
+            {
+                scope.SetTag("Service", nameof(APIGateway.Heimstaden.SessionView));
+            });
 
             app.UseAuthorization();
 
